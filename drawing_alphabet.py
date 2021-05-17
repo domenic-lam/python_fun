@@ -204,23 +204,34 @@ def draw_U(start_x, start_y):
 
 #V
 def draw_V(start_x, start_y):
-    goToPos(start_x + horiz_len, start_y - vert_len/4)
+    draw_diag_line(start_x, start_y, horiz_len/2, vert_len)
+    draw_diag_line(start_x + (horiz_len/2), start_y - vert_len, horiz_len/2, vert_len, "up") #left line
     
 #W
 def draw_W(start_x, start_y):
-    goToPos(start_x + horiz_len, start_y - vert_len/4)
+    draw_diag_line(start_x, start_y, horiz_len/4, vert_len)
+    draw_diag_line(start_x + (horiz_len/4), start_y - vert_len, horiz_len/4, vert_len, "up") #left line
+    draw_diag_line(start_x + horiz_len/2, start_y, horiz_len/4, vert_len)
+    draw_diag_line(start_x + (3*horiz_len/4), start_y - vert_len, horiz_len/4, vert_len, "up") #left line
     
 #X
 def draw_X(start_x, start_y):
-    goToPos(start_x + horiz_len, start_y - vert_len/4)
+    draw_diag_line(start_x, start_y, horiz_len, vert_len)
+    draw_diag_line(start_x, start_y - vert_len, horiz_len, vert_len, "up")
     
 #Y
 def draw_Y(start_x, start_y):
-    goToPos(start_x + horiz_len, start_y - vert_len/4)
+    draw_diag_line(start_x, start_y, horiz_len/2, vert_len/2)
+    draw_diag_line(start_x + (horiz_len/2), start_y - vert_len/2, horiz_len/2, vert_len/2, "up")
+    goToPos(start_x + horiz_len/2, start_y - vert_len/2)
+    t1.setheading(DOWN)
+    t1.forward(vert_len/2)
     
 #Z
 def draw_Z(start_x, start_y):
-    goToPos(start_x + horiz_len, start_y - vert_len/4)
+    draw_horiz_line(start_x, start_y)
+    draw_diag_line(start_x, start_y - vert_len, horiz_len, vert_len, "up")
+    draw_horiz_line(start_x, start_y - vert_len)
 
 ############### WRITING ALPHABET ##################
 next_letter = horiz_len + space
@@ -240,18 +251,17 @@ next_line = vert_len + space
 # draw_M(top_x, left_y - 2*next_line)
 # draw_N(top_x + next_letter, left_y - 2*next_line)
 # draw_O(top_x + 2*next_letter, left_y - 2*next_line)
-# draw_P(top_x + 3*next_letter, left_y - 2*next_line)
-# draw_Q(top_x + 4*next_letter, left_y - 2*next_line)
-# draw_R(top_x + 5*next_letter, left_y - 2*next_line)
+draw_P(top_x + 3*next_letter, left_y - 2*next_line)
+draw_Q(top_x + 4*next_letter, left_y - 2*next_line)
+draw_R(top_x + 5*next_letter, left_y - 2*next_line)
 draw_S(top_x, left_y - 3*next_line)
-draw_T(top_x + next_letter, left_y - 3*next_line)
-draw_U(top_x + 2*next_letter, left_y - 3*next_line)
-# draw_V(top_x + 3*next_letter, left_y - 3*next_line)
-# draw_W(top_x + 4*next_letter, left_y - 3*next_line)
-# draw_X(top_x + 5*next_letter, left_y - 3*next_line)
-# draw_X(top_x, left_y - 4*next_line)
-# draw_Y(top_x + next_letter, left_y - 4*next_line)
-# draw_Z(top_x + 2*next_letter, left_y - 4*next_line)
+# draw_T(top_x + next_letter, left_y - 3*next_line)
+# draw_U(top_x + 2*next_letter, left_y - 3*next_line)
+draw_V(top_x + 3*next_letter, left_y - 3*next_line)
+draw_W(top_x + 4*next_letter, left_y - 3*next_line)
+draw_X(top_x + 5*next_letter, left_y - 3*next_line)
+draw_Y(top_x, left_y - 4*next_line)
+draw_Z(top_x + next_letter, left_y - 4*next_line)
 
 
 turtle.done()
