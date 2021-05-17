@@ -6,12 +6,11 @@ chars = "abcdefghijklmnopqrstuvwxyz"
 nums = "1234567890"
 # misc = "!@#%&"
 
-
 pw_len = int(input("How long should the password be? "))
 
 pw = ""
 
-for i in range(1, pw_len):
+for i in range(1, pw_len + 1):
     if i % 3 == 0:
         pw += random.choice(nums)
     elif i % 5 == 0:
