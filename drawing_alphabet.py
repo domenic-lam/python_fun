@@ -13,7 +13,7 @@ TK_SILENCE_DEPRECATION=1
 screen = turtle.Screen()
 screen.setup(startx = 0, starty = 0)
 t1 = turtle.Turtle()
-t1.speed(speed=10)
+t1.speed(speed=0)
 
   
 # set the background color
@@ -36,10 +36,10 @@ def goToPos(x, y):
     t1.setheading(RIGHT)
     t1.pendown()
     
-def draw_vert_line(start_x, start_y):
-    goToPos(start_x, start_y)
+def draw_vert_line(x, y, v_len=vert_len):
+    goToPos(x, y)
     t1.setheading(DOWN)
-    t1.forward(vert_len)
+    t1.forward(v_len)
     
 def draw_horiz_line(start_x, start_y):
     goToPos(start_x, start_y)
@@ -56,7 +56,6 @@ def draw_diag_line(start_x, start_y, horiz_len, vert_len, dir="right"):
         t1.right(diag_angle)
     else:
         t1.left(diag_angle)
-    # print(diag_angle)
     diag_len = sqrt(vert_len**2 + horiz_len**2)
     t1.forward(diag_len)
 
@@ -128,9 +127,7 @@ def draw_I(start_x, start_y):
 #J
 def draw_J(start_x, start_y):
     draw_horiz_line(start_x, start_y)
-    goToPos(start_x + horiz_len/2, start_y)
-    t1.setheading(DOWN)
-    t1.forward(7*vert_len/8)
+    draw_vert_line(start_x + horiz_len/2, start_y,7*vert_len/8)
     t1.setheading(UP)
     t1.circle(horiz_len/4, -180)
     
@@ -196,11 +193,10 @@ def draw_T(start_x, start_y):
 
 #U
 def draw_U(start_x, start_y):
-    goToPos(start_x, start_y)
+    draw_vert_line(start_x, start_y, 3*vert_len/4)
     t1.setheading(DOWN)
-    t1.forward(3*vert_len/4)
     t1.circle(horiz_len/2, 180)
-    t1.forward(3*vert_len/4)
+    draw_vert_line(start_x + horiz_len, start_y, 3*vert_len/4)
 
 #V
 def draw_V(start_x, start_y):
@@ -223,9 +219,7 @@ def draw_X(start_x, start_y):
 def draw_Y(start_x, start_y):
     draw_diag_line(start_x, start_y, horiz_len/2, vert_len/2)
     draw_diag_line(start_x + (horiz_len/2), start_y - vert_len/2, horiz_len/2, vert_len/2, "up")
-    goToPos(start_x + horiz_len/2, start_y - vert_len/2)
-    t1.setheading(DOWN)
-    t1.forward(vert_len/2)
+    draw_vert_line(start_x + horiz_len/2, start_y - vert_len/2, vert_len/2)
     
 #Z
 def draw_Z(start_x, start_y):
@@ -236,33 +230,34 @@ def draw_Z(start_x, start_y):
 ############### WRITING ALPHABET ##################
 next_letter = horiz_len + space
 next_line = vert_len + space
-# draw_A(top_x, left_y)
-# draw_B(top_x + next_letter, left_y)
-# draw_C(top_x + 2*next_letter, left_y)
-# draw_D(top_x + 3*next_letter, left_y)
-# draw_E(top_x + 4*next_letter, left_y)
-# draw_F(top_x + 5*next_letter, left_y)
-# draw_G(top_x, left_y - next_line)
-# draw_H(top_x + next_letter, left_y - next_line)
-# draw_I(top_x + 2*next_letter, left_y - next_line)
-# draw_J(top_x + 3*next_letter, left_y - next_line)
-# draw_K(top_x + 4*next_letter, left_y - next_line)
-# draw_L(top_x + 5*next_letter, left_y - next_line)
-# draw_M(top_x, left_y - 2*next_line)
-# draw_N(top_x + next_letter, left_y - 2*next_line)
-# draw_O(top_x + 2*next_letter, left_y - 2*next_line)
+draw_A(top_x, left_y)
+draw_B(top_x + next_letter, left_y)
+draw_C(top_x + 2*next_letter, left_y)
+draw_D(top_x + 3*next_letter, left_y)
+draw_E(top_x + 4*next_letter, left_y)
+draw_F(top_x + 5*next_letter, left_y)
+draw_G(top_x, left_y - next_line)
+draw_H(top_x + next_letter, left_y - next_line)
+draw_I(top_x + 2*next_letter, left_y - next_line)
+draw_J(top_x + 3*next_letter, left_y - next_line)
+draw_K(top_x + 4*next_letter, left_y - next_line)
+draw_L(top_x + 5*next_letter, left_y - next_line)
+draw_M(top_x, left_y - 2*next_line)
+draw_N(top_x + next_letter, left_y - 2*next_line)
+draw_O(top_x + 2*next_letter, left_y - 2*next_line)
 draw_P(top_x + 3*next_letter, left_y - 2*next_line)
 draw_Q(top_x + 4*next_letter, left_y - 2*next_line)
 draw_R(top_x + 5*next_letter, left_y - 2*next_line)
 draw_S(top_x, left_y - 3*next_line)
-# draw_T(top_x + next_letter, left_y - 3*next_line)
-# draw_U(top_x + 2*next_letter, left_y - 3*next_line)
+draw_T(top_x + next_letter, left_y - 3*next_line)
+draw_U(top_x + 2*next_letter, left_y - 3*next_line)
 draw_V(top_x + 3*next_letter, left_y - 3*next_line)
 draw_W(top_x + 4*next_letter, left_y - 3*next_line)
 draw_X(top_x + 5*next_letter, left_y - 3*next_line)
 draw_Y(top_x, left_y - 4*next_line)
 draw_Z(top_x + next_letter, left_y - 4*next_line)
 
+goToPos(0, 0)
 
 turtle.done()
 turtle.exitonclick()
