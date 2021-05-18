@@ -75,10 +75,10 @@ def draw_loop(x, y, h_len=horiz_len, dir="right"):
 def draw_small_loop(x, y, h_len=horiz_len, dir="left"):
     if dir == "left":
         goToPos(x, y, 120)
-        t1.circle(horiz_len/2, 290)
+        t1.circle(horiz_len/2, 300)
     else:
         goToPos(x, y, -120)
-        t1.circle(horiz_len/2, -290)
+        t1.circle(horiz_len/2, -300)
     
     
 ############### UPPERCASE LETTERS ##################
@@ -240,7 +240,7 @@ def draw_Z(start_x, start_y):
 #a
 def draw_lc_A(start_x, start_y):
     goToPos(start_x + horiz_len, start_y - vert_len/2, UP)
-    t1.circle(horiz_len/2, 180)
+    t1.circle(horiz_len/2, 150)
     draw_vert_line(start_x + horiz_len, start_y - vert_len/2, vert_len/2)
     draw_small_loop(start_x + horiz_len, start_y - 3*vert_len/5, horiz_len/2)
     
@@ -251,6 +251,11 @@ def draw_lc_B(start_x, start_y):
    
 #c
 def draw_lc_C(start_x, start_y):
+    draw_small_loop(start_x + horiz_len, start_y - 3*vert_len/5, horiz_len/2)
+
+#d
+def draw_lc_D(start_x, start_y):
+    draw_vert_line(start_x + horiz_len, start_y, vert_len)
     draw_small_loop(start_x + horiz_len, start_y - 3*vert_len/5, horiz_len/2)
     
 ################# NUMBERS ##################
@@ -338,6 +343,7 @@ alphabet = {
     "a" : draw_lc_A,
     "b" : draw_lc_B,
     "c" : draw_lc_C,
+    "d" : draw_lc_D,
     "1" : draw_one,
     "2" : draw_two,
     "3" : draw_three,
@@ -393,7 +399,7 @@ next_line = vert_len + space
 
 w1 = "AB 3RJ21PWRBNG ELY LAM"
 w2 = "HELLO, MY nam3 ic ELY Lamb."
-w3 = "abc,."
+w3 = "abcde,."
 def prnt_word(word):
     line_break = 0
     nxt = 0
