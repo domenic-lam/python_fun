@@ -41,8 +41,8 @@ def draw_vert_line(x, y, v_len=vert_len):
     goToPos(x, y, DOWN)
     t1.forward(v_len)
     
-def draw_horiz_line(x, y, h_len=horiz_len):
-    goToPos(x, y)
+def draw_horiz_line(x, y, h_len=horiz_len, dir=RIGHT):
+    goToPos(x, y, dir)
     t1.forward(h_len)
 
 def draw_diag_line(x, y, h_len=horiz_len, v_len=vert_len, dir="right"):
@@ -71,6 +71,14 @@ def draw_loop(x, y, h_len=horiz_len, dir="right"):
     t1.circle(h_len*(h_len/vert_len), -180)
     t1.setheading(tail)
     t1.forward(h_len/2)
+    
+def draw_small_loop(x, y, h_len=horiz_len, dir="left"):
+    if dir == "left":
+        goToPos(x, y, 120)
+        t1.circle(horiz_len/2, 290)
+    else:
+        goToPos(x, y, -120)
+        t1.circle(horiz_len/2, -290)
     
     
 ############### UPPERCASE LETTERS ##################
@@ -112,9 +120,8 @@ def draw_F(start_x, start_y):
 #G
 def draw_G(start_x, start_y):
     draw_C(start_x, start_y)
-    t1.forward(horiz_len/3)
-    t1.setheading(LEFT)
-    t1.forward(horiz_len/2)
+    t1.forward(vert_len/4)
+    draw_horiz_line(start_x + horiz_len, start_y - vert_len/2, horiz_len/2, LEFT)
     
 #H
 def draw_H(start_x, start_y):
@@ -235,13 +242,16 @@ def draw_lc_A(start_x, start_y):
     goToPos(start_x + horiz_len, start_y - vert_len/2, UP)
     t1.circle(horiz_len/2, 180)
     draw_vert_line(start_x + horiz_len, start_y - vert_len/2, vert_len/2)
-    draw_loop(start_x + horiz_len, start_y - vert_len, dir="left")
+    draw_small_loop(start_x + horiz_len, start_y - 3*vert_len/5, horiz_len/2)
     
 #b
 def draw_lc_B(start_x, start_y):
     draw_vert_line(start_x, start_y, vert_len)
-    draw_loop(start_x, start_y - vert_len/2) # second loop
-    
+    draw_small_loop(start_x, start_y - 3*vert_len/5, horiz_len/2, "right")
+   
+#c
+def draw_lc_C(start_x, start_y):
+    draw_small_loop(start_x + horiz_len, start_y - 3*vert_len/5, horiz_len/2)
     
 ################# NUMBERS ##################
 #1
@@ -272,23 +282,33 @@ def draw_space(start_x, start_y):
 period_sz = 2
 #period
 def draw_period(start_x, start_y):
-    goToPos(start_x - period_sz/2, start_y - vert_len + period_sz/2)
-    
-    # start the filling color
+    goToPos(start_x + period_sz, start_y - vert_len + period_sz/2)
     t1.begin_fill()
-    
     t1.circle(period_sz)
-    # ending the filling of the color
     t1.end_fill()
 
 #comma
 def draw_comma(start_x, start_y):
+    draw_period(start_x, start_y)
+    t1.setheading(LEFT)
+    t1.circle(period_sz, -180)
+     
+    
+#exclamation mark
+def draw_excla(start_x, start_y):
     return
+
+#question mark
+def draw_ques(start_x, start_y):
+    return   
     
 ############### ALPHABET DICT ##################
 alphabet = {
     " " : draw_space,
     "." : draw_period,
+    "," : draw_comma,
+    "!" : draw_excla,
+    "?" : draw_ques,
     "A" : draw_A,
     "B" : draw_B,
     "C" : draw_C,
@@ -317,6 +337,7 @@ alphabet = {
     "Z" : draw_Z,
     "a" : draw_lc_A,
     "b" : draw_lc_B,
+    "c" : draw_lc_C,
     "1" : draw_one,
     "2" : draw_two,
     "3" : draw_three,
@@ -371,7 +392,8 @@ next_line = vert_len + space
 # draw_M(top_x + 6*next_letter, left_y)
 
 w1 = "AB 3RJ21PWRBNG ELY LAM"
-w2 = "HELLO. MY nam3 is ELY Lamb"
+w2 = "HELLO, MY nam3 ic ELY Lamb."
+w3 = "abc,."
 def prnt_word(word):
     line_break = 0
     nxt = 0
@@ -383,7 +405,7 @@ def prnt_word(word):
             nxt = 0
             line_break += 1
 
-prnt_word(w2)
+prnt_word(w3)
 
 
 goToPos(0, 0)
