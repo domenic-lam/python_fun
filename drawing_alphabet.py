@@ -1,7 +1,8 @@
 #Turtle basics
 
-from math import sqrt, atan, degrees
+from math import asin, sqrt, atan, degrees
 import turtle
+import random
 # import numpy as np
 # import pandas as pd
 # from pandas import Series, DataFrame
@@ -50,26 +51,26 @@ DOWN = 270
 space = 10
 
 ############### STANDARD MARKS ##################
-def goToPos(x, y, mark_dir=RIGHT):
+def goToPos(x, y, dir=RIGHT):
     t1.penup()
     t1.goto(x, y)
-    t1.setheading(mark_dir)
+    t1.setheading(dir)
     t1.pendown()
     
 def draw_vert_line(x, y, v_len=vert_len):
     goToPos(x, y, DOWN)
     t1.forward(v_len)
     
-def draw_horiz_line(x, y, h_len=horiz_len, mark_dir=RIGHT):
-    goToPos(x, y, mark_dir)
+def draw_horiz_line(x, y, h_len=horiz_len, dir=RIGHT):
+    goToPos(x, y, dir)
     t1.forward(h_len)
 
-def draw_diag_line(x, y, h_len=horiz_len, v_len=vert_len, mark_dir="right"):
+def draw_diag_line(x, y, h_len=horiz_len, v_len=vert_len, dir="right"):
     goToPos(x, y, DOWN)
     diag_angle = degrees(atan(h_len / v_len))
-    if(mark_dir == "left"):
+    if(dir == "left"):
         t1.right(diag_angle)
-    elif(mark_dir == "up"):
+    elif(dir == "up"):
         t1.setheading(UP)
         t1.right(diag_angle)
     else:
@@ -77,8 +78,8 @@ def draw_diag_line(x, y, h_len=horiz_len, v_len=vert_len, mark_dir="right"):
     diag_len = sqrt(v_len**2 + h_len**2)
     t1.forward(diag_len)
 
-def draw_loop(x, y, h_len=horiz_len, mark_dir="right"):
-    if mark_dir == "right":
+def draw_loop(x, y, h_len=horiz_len, dir="right"):
+    if dir == "right":
         head = RIGHT
         tail = LEFT
     else:
@@ -91,13 +92,13 @@ def draw_loop(x, y, h_len=horiz_len, mark_dir="right"):
     t1.setheading(tail)
     t1.forward(h_len/2)
     
-def draw_small_loop(x, y, h_len=horiz_len, mark_dir="left"):
-    if mark_dir == "left":
+def draw_small_loop(x, y, h_len=horiz_len, dir="left"):
+    if dir == "left":
         goToPos(x, y, 120)
-        t1.circle(h_len/2, 300)
+        t1.circle(horiz_len/2, 300)
     else:
         goToPos(x, y, -120)
-        t1.circle(h_len/2, -300)
+        t1.circle(horiz_len/2, -300)
     
     
 ############### UPPERCASE LETTERS ##################
@@ -261,21 +262,21 @@ def draw_lc_A(start_x, start_y):
     goToPos(start_x + horiz_len, start_y - vert_len/2, UP)
     t1.circle(horiz_len/2, 150)
     draw_vert_line(start_x + horiz_len, start_y - vert_len/2, vert_len/2)
-    draw_small_loop(start_x + horiz_len, start_y - 3*vert_len/5, horiz_len)
+    draw_small_loop(start_x + horiz_len, start_y - 3*vert_len/5, horiz_len/2)
     
 #b
 def draw_lc_B(start_x, start_y):
     draw_vert_line(start_x, start_y, vert_len)
-    draw_small_loop(start_x, start_y - 3*vert_len/5, horiz_len, "right")
+    draw_small_loop(start_x, start_y - 3*vert_len/5, horiz_len/2, "right")
    
 #c
 def draw_lc_C(start_x, start_y):
-    draw_small_loop(start_x + horiz_len, start_y - 3*vert_len/5, horiz_len)
+    draw_small_loop(start_x + horiz_len, start_y - 3*vert_len/5, horiz_len/2)
 
 #d
 def draw_lc_D(start_x, start_y):
     draw_vert_line(start_x + horiz_len, start_y, vert_len)
-    draw_small_loop(start_x + horiz_len, start_y - 3*vert_len/5, horiz_len)
+    draw_small_loop(start_x + horiz_len, start_y - 3*vert_len/5, horiz_len/2)
     
 ################# NUMBERS ##################
 #1
@@ -300,7 +301,7 @@ def draw_three(start_x, start_y):
     
 ############### PUNCTUATION ##################
 #space
-def draw_space():
+def draw_space(start_x, start_y):
     return
 
 period_sz = 2
@@ -319,9 +320,8 @@ def draw_comma(start_x, start_y):
      
     
 #exclamation mark
-def draw_exclam(start_x, start_y):
-    draw_vert_line(start_x + horiz_len/2, start_y, 3*vert_len/4)
-    draw_period(start_x + horiz_len/2 - period_sz, start_y)
+def draw_excla(start_x, start_y):
+    return
 
 #question mark
 def draw_ques(start_x, start_y):
@@ -332,7 +332,7 @@ alphabet = {
     " " : draw_space,
     "." : draw_period,
     "," : draw_comma,
-    "!" : draw_exclam,
+    "!" : draw_excla,
     "?" : draw_ques,
     "A" : draw_A,
     "B" : draw_B,
@@ -419,7 +419,6 @@ next_line = vert_len + space
 
 w1 = "AB 3RJ21PWRBNG ELY LAM"
 w2 = "HELLO, MY nam3 ic ELY Lamb."
-<<<<<<< HEAD
 w3 = "abcde,."
 def prnt_input(user_in):
     line_break = 0
@@ -429,13 +428,6 @@ def prnt_input(user_in):
             if ch != ' ':
                 nxt = 0
                 line_break += 1
-=======
-w3 = "abcde,.!"
-def prnt_word(word):
-    line_break = 0
-    nxt = 0
-    for ch in word:
->>>>>>> e7006db1399935052bab2f28dd2b308c5d9d4ef1
         if ch in alphabet:
             alphabet[ch](top_x + nxt*next_letter, left_y - line_break*next_line)
             nxt += 1
@@ -447,4 +439,4 @@ prnt_input(user_input)
 goToPos(0, 0)
 
 turtle.done()
-t1.exitonclick()
+turtle.exitonclick()
