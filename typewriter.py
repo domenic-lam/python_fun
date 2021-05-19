@@ -2,11 +2,6 @@
 
 from math import sqrt, atan, degrees
 import turtle
-# import numpy as np
-# import pandas as pd
-# from pandas import Series, DataFrame
-
-TK_SILENCE_DEPRECATION=1
 
 # ask for user input
 user_input = input("What would you like me to write out? (Press enter to submit): ")
@@ -41,7 +36,6 @@ except turtle.TurtleGraphicsError as err:
     t1.pencolor("black")
     t1.fillcolor("black")
 
-
 top_x = -350 # starting x
 left_y = 300 # starting y 
 horiz_len = 30 # character width
@@ -54,7 +48,7 @@ UP = 90
 LEFT = 180
 DOWN = 270
 
-############### STANDARD MARKS ##################
+############### COMMON MARKS ##################
 #puts pen into position without drawing
 def goToPos(x, y, towards=RIGHT):
     t1.penup() # stop drawing
@@ -80,7 +74,7 @@ def draw_diag_line(x, y, h_len=horiz_len, v_len=vert_len, towards="right"):
     diag_angle = degrees(atan(h_len / v_len))
     if(towards == "left"):
         t1.right(diag_angle) # turn left to draw towards right
-    elif(towards == "up"):
+    elif(towards == "up"): # if going upwards, turn right to draw towards right
         t1.setheading(UP)
         t1.right(diag_angle)
     else:
@@ -445,9 +439,7 @@ def prnt_input(user_in):
 
 prnt_input(user_input)
 
-
-
-goToPos(0, 0)
+# goToPos(0, 0) # if pointer on, use to move pointer after finish drawing
 
 turtle.done()
 # turtle.exitonclick()
