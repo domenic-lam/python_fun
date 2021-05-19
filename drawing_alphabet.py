@@ -9,21 +9,41 @@ import random
 
 TK_SILENCE_DEPRECATION=1
 
-# Screen and turtle setup
+# ask for user input
+user_input = input("What would you like me to write out? (Press enter to submit): ")
+
+try:
+    bkgdclr = input("What color background would you like me to write on? (Press enter to submit): ")
+except turtle.TurtleGraphicsError:
+    print("not a valid color")
+else:
+    bkgdclr = "white"
+# bkgdclr = input("What color background would you like me to write on? (Press enter to submit): ")
+
+try:
+    penclr = input("What color would you like me to write in? (Press enter to submit): ")
+except turtle.TurtleGraphicsError:
+    print("not a valid color")
+else:
+    penclr = "black"
+# penclr = input("What color would you like me to write in? (Press enter to submit): ")
+
+
+# screen and turtle setup
 screen = turtle.Screen()
 screen.setup(startx = 0, starty = 0)
 t1 = turtle.Turtle()
 t1.speed(speed=0)
 
-  
-# set the background color
-# screen.bgcolor("blue")
+# set the background and pen color based on user input
+screen.bgcolor(bkgdclr)
+t1.pencolor(penclr)
+t1.fillcolor(penclr)
 
-top_x = -250
-left_y = 200
+top_x = -350
+left_y = 300
 horiz_len = 30
 vert_len = 60
-right_angle = 90
 RIGHT = 0
 UP = 90
 LEFT = 180
@@ -400,18 +420,20 @@ next_line = vert_len + space
 w1 = "AB 3RJ21PWRBNG ELY LAM"
 w2 = "HELLO, MY nam3 ic ELY Lamb."
 w3 = "abcde,."
-def prnt_word(word):
+def prnt_input(user_in):
     line_break = 0
     nxt = 0
-    for i, ch in enumerate(word):
+    for i, ch in enumerate(user_in):
+        if nxt > 15:
+            if ch != ' ':
+                nxt = 0
+                line_break += 1
         if ch in alphabet:
             alphabet[ch](top_x + nxt*next_letter, left_y - line_break*next_line)
             nxt += 1
-        if nxt > 12:
-            nxt = 0
-            line_break += 1
 
-prnt_word(w3)
+prnt_input(user_input)
+
 
 
 goToPos(0, 0)
