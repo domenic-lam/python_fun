@@ -1,4 +1,4 @@
-#Turtle basics
+#Turtle typewriter
 
 from math import sqrt, atan, degrees
 import turtle
@@ -19,15 +19,16 @@ while(penclr == bkgdclr):
 # screen and turtle setup
 screen = turtle.Screen()
 screen.setup(startx = 0, starty = 0)
+t1 = turtle.Turtle()
+t1.speed(speed=0)
+t1.hideturtle() # hide turtle pointer
+
 try:
     screen.bgcolor(bkgdclr)
 except turtle.TurtleGraphicsError as err:
     print(str(err) + " is not a valid color; color set to white")
     screen.bgcolor("white")
 
-t1 = turtle.Turtle()
-t1.speed(speed=0)
-t1.hideturtle() # hide turtle pointer
 try:
     t1.pencolor(penclr)
     t1.fillcolor(penclr)
@@ -53,7 +54,7 @@ DOWN = 270
 def goToPos(x, y, towards=RIGHT):
     t1.penup() # stop drawing
     t1.goto(x, y) # move to x, y
-    t1.setheading(towards) # change direction
+    t1.setheading(towards) # set direction
     t1.pendown() # start drawing
     
 # draws vertical line of length v_len top to bottom
@@ -207,8 +208,7 @@ def draw_Q(start_x, start_y):
 
 #R
 def draw_R(start_x, start_y):
-    draw_vert_line(start_x, start_y)
-    draw_loop(start_x, start_y)
+    draw_P(start_x, start_y)
     draw_diag_line(start_x + horiz_len/2, start_y - vert_len/2, horiz_len/2, vert_len/2)
 
 #S
@@ -379,7 +379,7 @@ alphabet = {
 next_letter = horiz_len + space
 next_line = vert_len + space
 
-############### WRITING ALPHABET ##################
+############### TEST WRITING ALPHABET ##################
 # draw_A(top_x, left_y)
 # draw_B(top_x + next_letter, left_y)
 # draw_C(top_x + 2*next_letter, left_y)
@@ -408,12 +408,12 @@ next_line = vert_len + space
 # draw_Z(top_x + next_letter, left_y - 4*next_line)
 
 
-############### WRITING NUMBERS ##################
+############### TEST WRITING NUMBERS ##################
 # draw_one(top_x + 2*next_letter, left_y - 4*next_line)
 # draw_two(top_x + 3*next_letter, left_y - 4*next_line)
 # draw_three(top_x + 4*next_letter, left_y - 4*next_line)
 
-############### WRITING WORDS ##################
+############### TEST WRITING WORDS ##################
 #ELY LAM
 # draw_E(top_x, left_y)
 # draw_L(top_x + next_letter, left_y)
@@ -421,10 +421,12 @@ next_line = vert_len + space
 # draw_L(top_x + 4*next_letter, left_y)
 # draw_A(top_x + 5*next_letter, left_y)
 # draw_M(top_x + 6*next_letter, left_y)
-
 w1 = "AB 3RJ21PWRBNG ELY LAM"
 w2 = "HELLO, MY nam3 ic ELY Lamb."
 w3 = "abcde,."
+
+
+# printing user input
 def prnt_input(user_in):
     line_break = 0
     nxt = 0
