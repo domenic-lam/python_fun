@@ -11,74 +11,85 @@ TK_SILENCE_DEPRECATION=1
 # ask for user input
 user_input = input("What would you like me to write out? (Press enter to submit): ")
 
-try:
-    bkgdclr = input("What color background would you like me to write on? (Press enter to submit): ")
-except turtle.TurtleGraphicsError:
-    print("not a valid color")
-else:
-    bkgdclr = "white"
-# bkgdclr = input("What color background would you like me to write on? (Press enter to submit): ")
-
-try:
-    penclr = input("What color would you like me to write in? (Press enter to submit): ")
-except turtle.TurtleGraphicsError:
-    print("not a valid color")
-else:
-    penclr = "black"
-# penclr = input("What color would you like me to write in? (Press enter to submit): ")
-
+# set the background and pen color based on user input
+bkgdclr = ""
+while bkgdclr == "":
+    bkgdclr = input("What color background would you like me to write on? (e.g., black, blue, etc...) ")
+penclr = ""
+while penclr == "":
+    penclr = input("What color would you like me to write in? ")
+while(penclr == bkgdclr):
+    penclr = input("What color would you like me to write in? (Please choose a different color than the background color) ")
 
 # screen and turtle setup
 screen = turtle.Screen()
 screen.setup(startx = 0, starty = 0)
+try:
+    screen.bgcolor(bkgdclr)
+except turtle.TurtleGraphicsError as err:
+    print(str(err) + " is not a valid color; color set to white")
+    screen.bgcolor("white")
+
 t1 = turtle.Turtle()
 t1.speed(speed=0)
+t1.hideturtle() # hide turtle pointer
+try:
+    t1.pencolor(penclr)
+    t1.fillcolor(penclr)
+except turtle.TurtleGraphicsError as err:
+    print(str(err) + " is not a valid color; color set to black")
+    t1.pencolor("black")
+    t1.fillcolor("black")
 
-# set the background and pen color based on user input
-screen.bgcolor(bkgdclr)
-t1.pencolor(penclr)
-t1.fillcolor(penclr)
 
-top_x = -350
-left_y = 300
-horiz_len = 30
-vert_len = 60
+top_x = -350 # starting x
+left_y = 300 # starting y 
+horiz_len = 30 # character width
+vert_len = 60 # character height
+space = 10 # space between characters
+
+# turtle direction headings
 RIGHT = 0
 UP = 90
 LEFT = 180
 DOWN = 270
-space = 10
 
 ############### STANDARD MARKS ##################
-def goToPos(x, y, mark_dir=RIGHT):
-    t1.penup()
-    t1.goto(x, y)
-    t1.setheading(mark_dir)
-    t1.pendown()
+#puts pen into position without drawing
+def goToPos(x, y, towards=RIGHT):
+    t1.penup() # stop drawing
+    t1.goto(x, y) # move to x, y
+    t1.setheading(towards) # change direction
+    t1.pendown() # start drawing
     
+# draws vertical line of length v_len top to bottom
 def draw_vert_line(x, y, v_len=vert_len):
     goToPos(x, y, DOWN)
     t1.forward(v_len)
     
-def draw_horiz_line(x, y, h_len=horiz_len, mark_dir=RIGHT):
-    goToPos(x, y, mark_dir)
+# draws horizontal line of length h_len
+# default draws towards RIGHT (left to right)
+def draw_horiz_line(x, y, h_len=horiz_len, towards=RIGHT):
+    goToPos(x, y, towards)
     t1.forward(h_len)
 
-def draw_diag_line(x, y, h_len=horiz_len, v_len=vert_len, mark_dir="right"):
-    goToPos(x, y, DOWN)
+# draws diagonal line based on h_len and v_len
+# default draws towards RIGHT (left to right)
+def draw_diag_line(x, y, h_len=horiz_len, v_len=vert_len, towards="right"):
+    goToPos(x, y, DOWN) # start facing downward
     diag_angle = degrees(atan(h_len / v_len))
-    if(mark_dir == "left"):
-        t1.right(diag_angle)
-    elif(mark_dir == "up"):
+    if(towards == "left"):
+        t1.right(diag_angle) # turn left to draw towards right
+    elif(towards == "up"):
         t1.setheading(UP)
         t1.right(diag_angle)
     else:
-        t1.left(diag_angle)
+        t1.left(diag_angle) # turn left to draw towards right
     diag_len = sqrt(v_len**2 + h_len**2)
     t1.forward(diag_len)
 
-def draw_loop(x, y, h_len=horiz_len, mark_dir="right"):
-    if mark_dir == "right":
+def draw_loop(x, y, h_len=horiz_len, towards="right"):
+    if towards == "right":
         head = RIGHT
         tail = LEFT
     else:
@@ -91,8 +102,8 @@ def draw_loop(x, y, h_len=horiz_len, mark_dir="right"):
     t1.setheading(tail)
     t1.forward(h_len/2)
     
-def draw_small_loop(x, y, h_len=horiz_len, mark_dir="left"):
-    if mark_dir == "left":
+def draw_small_loop(x, y, h_len=horiz_len, towards="left"):
+    if towards == "left":
         goToPos(x, y, 120)
         t1.circle(h_len/2, 300)
     else:
@@ -266,7 +277,7 @@ def draw_lc_A(start_x, start_y):
 #b
 def draw_lc_B(start_x, start_y):
     draw_vert_line(start_x, start_y, vert_len)
-    draw_small_loop(start_x, start_y - 3*vert_len/5, horiz_len/2, "right")
+    draw_small_loop(start_x, start_y - 3*vert_len/5, horiz_len, "right")
    
 #c
 def draw_lc_C(start_x, start_y):
@@ -300,7 +311,7 @@ def draw_three(start_x, start_y):
     
 ############### PUNCTUATION ##################
 #space
-def draw_space():
+def draw_space(start_x, start_y):
     return
 
 period_sz = 2
@@ -439,4 +450,4 @@ prnt_input(user_input)
 goToPos(0, 0)
 
 turtle.done()
-turtle.exitonclick()
+# turtle.exitonclick()
