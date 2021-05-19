@@ -1,6 +1,6 @@
 #Turtle basics
 
-from math import asin, sqrt, atan, degrees
+from math import sqrt, atan, degrees
 import turtle
 # import numpy as np
 # import pandas as pd
