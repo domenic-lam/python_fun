@@ -1,11 +1,17 @@
 {
     "cSpell.words": [
         "bgcolor",
+        "bkgdclr",
         "exitonclick",
         "numpy",
+        "penclr",
         "penup",
         "prnt",
         "startx",
         "starty"
+    ],
+    "cSpell.ignoreWords": [
+        "pwrbng",
+        "rj"
     ]
 }
