@@ -1,20 +1,21 @@
-#Turtle typewriter
+############## TURTLE TYPEWRITER ##############
+# Turtle drawing practice
 
 from math import sqrt, atan, degrees
 import turtle
 
 # ask for user input
-user_input = input("What would you like me to write out? (Press enter to submit): ")
+# user_input = input("What would you like me to write out? (Press enter to submit): ")
 
-# set the background and pen color based on user input
-bkgdclr = ""
-while bkgdclr == "":
-    bkgdclr = input("What color background would you like me to write on? (e.g., black, blue, etc...) ")
-penclr = ""
-while penclr == "":
-    penclr = input("What color would you like me to write in? ")
-while(penclr == bkgdclr):
-    penclr = input("What color would you like me to write in? (Please choose a different color than the background color) ")
+# # set the background and pen color based on user input
+# bkgdclr = ""
+# while bkgdclr == "":
+#     bkgdclr = input("What color background would you like me to write on? (e.g., black, blue, etc...) ")
+# penclr = ""
+# while penclr == "":
+#     penclr = input("What color would you like me to write in? ")
+# while(penclr == bkgdclr):
+#     penclr = input("What color would you like me to write in? (Please choose a different color than the background color) ")
 
 # screen and turtle setup
 screen = turtle.Screen()
@@ -23,19 +24,19 @@ t1 = turtle.Turtle()
 t1.speed(speed=0)
 t1.hideturtle() # hide turtle pointer
 
-try:
-    screen.bgcolor(bkgdclr)
-except turtle.TurtleGraphicsError as err:
-    print(str(err) + " is not a valid color; color set to white")
-    screen.bgcolor("white")
+# try:
+#     screen.bgcolor(bkgdclr)
+# except turtle.TurtleGraphicsError as err:
+#     print(str(err) + " is not a valid color; color set to white")
+#     screen.bgcolor("white")
 
-try:
-    t1.pencolor(penclr)
-    t1.fillcolor(penclr)
-except turtle.TurtleGraphicsError as err:
-    print(str(err) + " is not a valid color; color set to black")
-    t1.pencolor("black")
-    t1.fillcolor("black")
+# try:
+#     t1.pencolor(penclr)
+#     t1.fillcolor(penclr)
+# except turtle.TurtleGraphicsError as err:
+#     print(str(err) + " is not a valid color; color set to black")
+#     t1.pencolor("black")
+#     t1.fillcolor("black")
 
 top_x = -350 # starting x
 left_y = 300 # starting y 
@@ -48,6 +49,7 @@ RIGHT = 0
 UP = 90
 LEFT = 180
 DOWN = 270
+
 
 ############### COMMON MARKS ##################
 #puts pen into position without drawing
@@ -83,6 +85,7 @@ def draw_diag_line(x, y, h_len=horiz_len, v_len=vert_len, towards="right"):
     diag_len = sqrt(v_len**2 + h_len**2)
     t1.forward(diag_len)
 
+# draws 
 def draw_loop(x, y, h_len=horiz_len, towards="right"):
     if towards == "right":
         head = RIGHT
@@ -172,7 +175,6 @@ def draw_K(start_x, start_y):
     draw_diag_line(start_x, start_y - vert_len/2, horiz_len, vert_len/2, "up")
     draw_diag_line(start_x, start_y - vert_len/2, horiz_len, vert_len/2)
 
-
 #L
 def draw_L(start_x, start_y):
     draw_vert_line(start_x, start_y)
@@ -255,10 +257,16 @@ def draw_Y(start_x, start_y):
     draw_vert_line(start_x + horiz_len/2, start_y - vert_len/2, vert_len/2)
     
 #Z
-def draw_Z(start_x, start_y):
-    draw_horiz_line(start_x, start_y)
-    draw_diag_line(start_x, start_y - vert_len, horiz_len, vert_len, "up")
+def draw_Z(start_x, start_y, upper=True):
+    if upper:
+        v_len = vert_len
+        draw_horiz_line(start_x, start_y)
+    else:
+        v_len = vert_len/2
+        draw_horiz_line(start_x, start_y - v_len)
+    draw_diag_line(start_x, start_y - vert_len, horiz_len, v_len, "up")
     draw_horiz_line(start_x, start_y - vert_len)
+    
     
 ############### LOWERCASE LETTERS ##################
 #a
@@ -281,6 +289,15 @@ def draw_lc_C(start_x, start_y):
 def draw_lc_D(start_x, start_y):
     draw_vert_line(start_x + horiz_len, start_y, vert_len)
     draw_small_loop(start_x + horiz_len, start_y - 3*vert_len/5, horiz_len)
+    
+#e
+def draw_lc_E(start_x, start_y):
+    draw_lc_C(start_x, start_y)
+    draw_horiz_line(start_x + horiz_len, start_y - 3*vert_len/5, 4*horiz_len/5, LEFT)
+    
+#z
+def draw_lc_Z(start_x, start_y):
+    draw_Z(start_x, start_y, False)
     
 ################# NUMBERS ##################
 #1
@@ -332,6 +349,7 @@ def draw_exclam(start_x, start_y):
 def draw_ques(start_x, start_y):
     return   
     
+    
 ############### ALPHABET DICT ##################
 alphabet = {
     " " : draw_space,
@@ -369,6 +387,8 @@ alphabet = {
     "b" : draw_lc_B,
     "c" : draw_lc_C,
     "d" : draw_lc_D,
+    "e" : draw_lc_E,
+    "z" : draw_lc_Z,
     "1" : draw_one,
     "2" : draw_two,
     "3" : draw_three,
@@ -378,6 +398,7 @@ alphabet = {
 ############### SPACES AND LINE BREAKS ##################
 next_letter = horiz_len + space
 next_line = vert_len + space
+
 
 ############### TEST WRITING ALPHABET ##################
 # draw_A(top_x, left_y)
@@ -406,12 +427,18 @@ next_line = vert_len + space
 # draw_X(top_x + 5*next_letter, left_y - 3*next_line)
 # draw_Y(top_x, left_y - 4*next_line)
 # draw_Z(top_x + next_letter, left_y - 4*next_line)
-
+# draw_Z(top_x + 2*next_letter, left_y - 4*next_line)
+# draw_a(top_x + 3*next_letter, left_y - 4*next_line)
+# draw_b(top_x + 4*next_letter, left_y - 4*next_line)
+# draw_c(top_x + 5*next_letter, left_y - 4*next_line)
+# draw_d(top_x, left_y - 4*next_line)
+# draw_d(top_x + next_letter, left_y - 4*next_line)
 
 ############### TEST WRITING NUMBERS ##################
 # draw_one(top_x + 2*next_letter, left_y - 4*next_line)
 # draw_two(top_x + 3*next_letter, left_y - 4*next_line)
 # draw_three(top_x + 4*next_letter, left_y - 4*next_line)
+
 
 ############### TEST WRITING WORDS ##################
 #ELY LAM
@@ -425,12 +452,23 @@ w1 = "AB 3RJ21PWRBNG ELY LAM"
 w2 = "HELLO, MY nam3 ic ELY Lamb."
 w3 = "abcde,."
 
+############### TEST ALPHABET DICT ##################
+def test_print_alpha():
+    line_break = 0
+    nxt = 0
+    for v in alphabet.values():
+        v(top_x + nxt*next_letter, left_y - line_break*next_line)
+        nxt += 1
+        if nxt > 15:
+            nxt = 0
+            line_break += 1
+
 
 # printing user input
 def prnt_input(user_in):
     line_break = 0
     nxt = 0
-    for i, ch in enumerate(user_in):
+    for ch in user_in:
         if nxt > 15:
             if ch != ' ':
                 nxt = 0
@@ -439,9 +477,12 @@ def prnt_input(user_in):
             alphabet[ch](top_x + nxt*next_letter, left_y - line_break*next_line)
             nxt += 1
 
-prnt_input(user_input)
+# prnt_input(user_input)
+test_print_alpha()
 
 # goToPos(0, 0) # if pointer on, use to move pointer after finish drawing
 
 turtle.done()
 # turtle.exitonclick()
+# import tkinter as tk
+# tk.TK_SILENCE_DEPRECATION=1
