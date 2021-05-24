@@ -271,8 +271,8 @@ def draw_Z(start_x, start_y, upper=True):
 ############### LOWERCASE LETTERS ##################
 #a
 def draw_lc_A(start_x, start_y):
-    goToPos(start_x + horiz_len, start_y - vert_len/2, UP)
-    t1.circle(horiz_len/2, 150)
+    # goToPos(start_x + horiz_len, start_y - vert_len/2, UP)
+    # t1.circle(horiz_len/2, 150)
     draw_vert_line(start_x + horiz_len, start_y - vert_len/2, vert_len/2)
     draw_small_loop(start_x + horiz_len, start_y - 3*vert_len/5, horiz_len)
     
@@ -283,18 +283,40 @@ def draw_lc_B(start_x, start_y):
    
 #c
 def draw_lc_C(start_x, start_y):
-    draw_small_loop(start_x + horiz_len, start_y - 3*vert_len/5, horiz_len)
+    goToPos(start_x, start_y - 3*vert_len/4, DOWN)
+    t1.circle(vert_len/4, -155)
+    goToPos(start_x, start_y - 3*vert_len/4, DOWN)
+    t1.circle(vert_len/4, 155)
 
 #d
 def draw_lc_D(start_x, start_y):
+    draw_lc_C(start_x, start_y)
     draw_vert_line(start_x + horiz_len, start_y, vert_len)
-    draw_small_loop(start_x + horiz_len, start_y - 3*vert_len/5, horiz_len)
+    # draw_small_loop(start_x + horiz_len, start_y - 3*vert_len/5, horiz_len)
     
 #e
 def draw_lc_E(start_x, start_y):
-    draw_lc_C(start_x, start_y)
-    draw_horiz_line(start_x + horiz_len, start_y - 3*vert_len/5, 4*horiz_len/5, LEFT)
-    
+    draw_horiz_line(start_x, start_y - 3*vert_len/4)
+    goToPos(start_x + horiz_len, start_y - 3*vert_len/4, UP)
+    t1.circle(vert_len/4, 180)
+    t1.circle(vert_len/4, 150)
+
+#f
+def draw_lc_F(start_x, start_y):
+    draw_horiz_line(start_x, start_y - vert_len/2)
+    goToPos(start_x + horiz_len, start_y - 3*vert_len/4, UP)
+    t1.circle(3*vert_len/4, 180)
+    t1.circle(vert_len/4, 150)
+
+#s
+def draw_lc_S(start_x, start_y):   
+    goToPos(start_x + horiz_len, start_y - 5*vert_len/7, 100)
+    t1.circle(horiz_len/2, 130)
+    draw_diag_line(start_x, start_y - 5*vert_len/7 + 6, horiz_len, vert_len/4)
+    goToPos(start_x + horiz_len, start_y - 6*vert_len/7, 50)
+    # t1.setheading(UP)
+    t1.circle(horiz_len/2, -130)
+
 #z
 def draw_lc_Z(start_x, start_y):
     draw_Z(start_x, start_y, False)
@@ -348,46 +370,54 @@ def draw_exclam(start_x, start_y):
 #question mark
 def draw_ques(start_x, start_y):
     return   
+
+#dollar sign
+def draw_dollar(start_x, start_y):
+    draw_S(start_x, start_y)
+    draw_vert_line(start_x + horiz_len/3, start_y)  
+    draw_vert_line(start_x + 2*horiz_len/3, start_y)  
     
     
 ############### ALPHABET DICT ##################
 alphabet = {
-    " " : draw_space,
-    "." : draw_period,
-    "," : draw_comma,
-    "!" : draw_exclam,
+    # " " : draw_space,
+    # "." : draw_period,
+    # "," : draw_comma,
+    # "!" : draw_exclam,
     "?" : draw_ques,
-    "A" : draw_A,
-    "B" : draw_B,
-    "C" : draw_C,
-    "D" : draw_D,
-    "E" : draw_E,
-    "F" : draw_F,
-    "G" : draw_G,
-    "H" : draw_H,
-    "I" : draw_I,
-    "J" : draw_J,
-    "K" : draw_K,
-    "L" : draw_L,
-    "M" : draw_M,
-    "N" : draw_N,
-    "O" : draw_O,
-    "P" : draw_P,
-    "Q" : draw_Q,
-    "R" : draw_R,
-    "S" : draw_S,
-    "T" : draw_T,
-    "U" : draw_U,
-    "V" : draw_V,
-    "W" : draw_W,
-    "X" : draw_X,
-    "Y" : draw_Y,
-    "Z" : draw_Z,
+    # "$" : draw_dollar,
+    # "A" : draw_A,
+    # "B" : draw_B,
+    # "C" : draw_C,
+    # "D" : draw_D,
+    # "E" : draw_E,
+    # "F" : draw_F,
+    # "G" : draw_G,
+    # "H" : draw_H,
+    # "I" : draw_I,
+    # "J" : draw_J,
+    # "K" : draw_K,
+    # "L" : draw_L,
+    # "M" : draw_M,
+    # "N" : draw_N,
+    # "O" : draw_O,
+    # "P" : draw_P,
+    # "Q" : draw_Q,
+    # "R" : draw_R,
+    # "S" : draw_S,
+    # "T" : draw_T,
+    # "U" : draw_U,
+    # "V" : draw_V,
+    # "W" : draw_W,
+    # "X" : draw_X,
+    # "Y" : draw_Y,
+    # "Z" : draw_Z,
     "a" : draw_lc_A,
     "b" : draw_lc_B,
     "c" : draw_lc_C,
     "d" : draw_lc_D,
     "e" : draw_lc_E,
+    "s" : draw_lc_S,
     "z" : draw_lc_Z,
     "1" : draw_one,
     "2" : draw_two,
@@ -448,9 +478,9 @@ next_line = vert_len + space
 # draw_L(top_x + 4*next_letter, left_y)
 # draw_A(top_x + 5*next_letter, left_y)
 # draw_M(top_x + 6*next_letter, left_y)
-w1 = "AB 3RJ21PWRBNG ELY LAM"
-w2 = "HELLO, MY nam3 ic ELY Lamb."
-w3 = "abcde,."
+# w1 = "AB 3RJ21PWRBNG ELY LAM"
+# w2 = "HELLO, MY nam3 ic ELY Lamb."
+# w3 = "abcde,."
 
 ############### TEST ALPHABET DICT ##################
 def test_print_alpha():
