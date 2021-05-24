@@ -50,7 +50,6 @@ UP = 90
 LEFT = 180
 DOWN = 270
 
-
 ############### COMMON MARKS ##################
 #puts pen into position without drawing
 def goToPos(x, y, towards=RIGHT):
@@ -59,6 +58,12 @@ def goToPos(x, y, towards=RIGHT):
     t1.setheading(towards) # set direction
     t1.pendown() # start drawing
     
+def getCurrX():
+    return int(t1.position()[0]) # current X coord
+
+def getCurrY():
+    return int(t1.position()[1]) # current Y coord
+
 # draws vertical line of length v_len top to bottom
 def draw_vert_line(x, y, v_len=vert_len):
     goToPos(x, y, DOWN)
@@ -271,51 +276,59 @@ def draw_Z(start_x, start_y, upper=True):
 ############### LOWERCASE LETTERS ##################
 #a
 def draw_lc_A(start_x, start_y):
-    # goToPos(start_x + horiz_len, start_y - vert_len/2, UP)
-    # t1.circle(horiz_len/2, 150)
     draw_vert_line(start_x + horiz_len, start_y - vert_len/2, vert_len/2)
-    draw_small_loop(start_x + horiz_len, start_y - 3*vert_len/5, horiz_len)
+    draw_lc_C(start_x, start_y)
     
 #b
 def draw_lc_B(start_x, start_y):
     draw_vert_line(start_x, start_y, vert_len)
-    draw_small_loop(start_x, start_y - 3*vert_len/5, horiz_len, "right")
+    draw_lc_C(start_x, start_y, True)
+    # draw_small_loop(start_x, start_y - 3*vert_len/5, horiz_len, "right")
    
 #c
-def draw_lc_C(start_x, start_y):
-    goToPos(start_x, start_y - 3*vert_len/4, DOWN)
+def draw_lc_C(start_x, start_y, flip=False):
+    dir = DOWN
+    x = 0
+    if(flip):
+        dir = UP
+        x = horiz_len
+    goToPos(start_x + x, start_y - 3*vert_len/4, dir)
     t1.circle(vert_len/4, -155)
-    goToPos(start_x, start_y - 3*vert_len/4, DOWN)
+    goToPos(start_x + x, start_y - 3*vert_len/4, dir)
     t1.circle(vert_len/4, 155)
 
 #d
 def draw_lc_D(start_x, start_y):
     draw_lc_C(start_x, start_y)
     draw_vert_line(start_x + horiz_len, start_y, vert_len)
-    # draw_small_loop(start_x + horiz_len, start_y - 3*vert_len/5, horiz_len)
     
 #e
 def draw_lc_E(start_x, start_y):
     draw_horiz_line(start_x, start_y - 3*vert_len/4)
-    goToPos(start_x + horiz_len, start_y - 3*vert_len/4, UP)
-    t1.circle(vert_len/4, 180)
-    t1.circle(vert_len/4, 150)
+    t1.setheading(UP)
+    t1.circle(vert_len/4, 330)
 
 #f
 def draw_lc_F(start_x, start_y):
     draw_horiz_line(start_x, start_y - vert_len/2)
-    goToPos(start_x + horiz_len, start_y - 3*vert_len/4, UP)
-    t1.circle(3*vert_len/4, 180)
-    t1.circle(vert_len/4, 150)
+    goToPos(start_x + horiz_len, start_y - vert_len/4, UP)
+    t1.circle(3*horiz_len/8, 180)
+    draw_vert_line(getCurrX(), getCurrY(), 3*vert_len/4)
+
+#g
+def draw_lc_G(start_x, start_y):
+    draw_horiz_line(start_x, start_y - vert_len/2)
+    goToPos(start_x + horiz_len, start_y - vert_len/4, UP)
+    t1.circle(3*horiz_len/8, 180)
+    draw_vert_line(getCurrX(), getCurrY(), 3*vert_len/4)
 
 #s
 def draw_lc_S(start_x, start_y):   
-    goToPos(start_x + horiz_len, start_y - 5*vert_len/7, 100)
-    t1.circle(horiz_len/2, 130)
-    draw_diag_line(start_x, start_y - 5*vert_len/7 + 6, horiz_len, vert_len/4)
-    goToPos(start_x + horiz_len, start_y - 6*vert_len/7, 50)
-    # t1.setheading(UP)
-    t1.circle(horiz_len/2, -130)
+    goToPos(start_x + horiz_len, start_y - 4*vert_len/7, 120)
+    t1.circle(horiz_len/2, 120)
+    draw_diag_line(getCurrX(), getCurrY(), 5*horiz_len/6, vert_len/4)
+    goToPos(getCurrX(), getCurrY(), 60)
+    t1.circle(horiz_len/2, -120)
 
 #z
 def draw_lc_Z(start_x, start_y):
@@ -369,7 +382,7 @@ def draw_exclam(start_x, start_y):
 
 #question mark
 def draw_ques(start_x, start_y):
-    return   
+    return 
 
 #dollar sign
 def draw_dollar(start_x, start_y):
@@ -417,6 +430,7 @@ alphabet = {
     "c" : draw_lc_C,
     "d" : draw_lc_D,
     "e" : draw_lc_E,
+    "f" : draw_lc_F,
     "s" : draw_lc_S,
     "z" : draw_lc_Z,
     "1" : draw_one,
