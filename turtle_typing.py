@@ -117,9 +117,9 @@ def draw_small_loop(x, y, h_len=horiz_len, towards="left"):
 ############### UPPERCASE LETTERS ##################
 #A
 def draw_A(start_x, start_y):
-    draw_diag_line(start_x + (horiz_len/2), start_y, horiz_len/2, vert_len) #right line
-    draw_diag_line(start_x + (horiz_len/2), start_y, horiz_len/2, vert_len, "left") #left line
-    draw_horiz_line(start_x + (horiz_len/3.6), start_y - (vert_len/2), 4*horiz_len/9) # middle line
+    draw_diag_line(start_x + horiz_len/2, start_y, horiz_len/2, vert_len) #right line
+    draw_diag_line(start_x + horiz_len/2, start_y, horiz_len/2, vert_len, "left") #left line
+    draw_horiz_line(start_x + horiz_len/3.6, start_y - vert_len/2, 4*horiz_len/9) # middle line
     
 #B
 def draw_B(start_x, start_y):
@@ -234,21 +234,20 @@ def draw_T(start_x, start_y):
 #U
 def draw_U(start_x, start_y):
     draw_vert_line(start_x, start_y, 3*vert_len/4)
-    t1.setheading(DOWN)
     t1.circle(horiz_len/2, 180)
     draw_vert_line(start_x + horiz_len, start_y, 3*vert_len/4)
 
 #V
 def draw_V(start_x, start_y):
     draw_diag_line(start_x, start_y, horiz_len/2, vert_len)
-    draw_diag_line(start_x + (horiz_len/2), start_y - vert_len, horiz_len/2, vert_len, "up") #left line
+    draw_diag_line(getCurrX(), getCurrY(), horiz_len/2, vert_len, "up") #left line
     
 #W
 def draw_W(start_x, start_y):
     draw_diag_line(start_x, start_y, horiz_len/4, vert_len)
-    draw_diag_line(start_x + (horiz_len/4), start_y - vert_len, horiz_len/4, vert_len, "up") #left line
-    draw_diag_line(start_x + horiz_len/2, start_y, horiz_len/4, vert_len)
-    draw_diag_line(start_x + (3*horiz_len/4), start_y - vert_len, horiz_len/4, vert_len, "up") #left line
+    draw_diag_line(getCurrX(), getCurrY(), horiz_len/4, vert_len, "up") #left line
+    draw_diag_line(getCurrX(), getCurrY(), horiz_len/4, vert_len)
+    draw_diag_line(getCurrX(), getCurrY(), horiz_len/4, vert_len, "up") #left line
     
 #X
 def draw_X(start_x, start_y):
@@ -258,7 +257,7 @@ def draw_X(start_x, start_y):
 #Y
 def draw_Y(start_x, start_y):
     draw_diag_line(start_x, start_y, horiz_len/2, vert_len/2)
-    draw_diag_line(start_x + (horiz_len/2), start_y - vert_len/2, horiz_len/2, vert_len/2, "up")
+    draw_diag_line(start_x + horiz_len/2, start_y - vert_len/2, horiz_len/2, vert_len/2, "up")
     draw_vert_line(start_x + horiz_len/2, start_y - vert_len/2, vert_len/2)
     
 #Z
@@ -282,19 +281,19 @@ def draw_lc_A(start_x, start_y):
 #b
 def draw_lc_B(start_x, start_y):
     draw_vert_line(start_x, start_y, vert_len)
-    draw_lc_C(start_x, start_y, True)
+    # draw_lc_C(start_x, start_y, True)
     # draw_small_loop(start_x, start_y - 3*vert_len/5, horiz_len, "right")
    
 #c
 def draw_lc_C(start_x, start_y, flip=False):
-    dir = DOWN
+    DIR = DOWN
     x = 0
     if(flip):
-        dir = UP
+        DIR = UP
         x = horiz_len
-    goToPos(start_x + x, start_y - 3*vert_len/4, dir)
+    goToPos(start_x + x, start_y - 3*vert_len/4, DIR)
     t1.circle(vert_len/4, -155)
-    goToPos(start_x + x, start_y - 3*vert_len/4, dir)
+    goToPos(start_x + x, start_y - 3*vert_len/4, DIR)
     t1.circle(vert_len/4, 155)
 
 #d
@@ -313,18 +312,31 @@ def draw_lc_F(start_x, start_y):
     draw_horiz_line(start_x, start_y - vert_len/2)
     goToPos(start_x + horiz_len, start_y - vert_len/4, UP)
     t1.circle(3*horiz_len/8, 180)
+    # draw_lc_O(start_x, start_y + 3*vert_len/4 - vert_len/4, 180)
     draw_vert_line(getCurrX(), getCurrY(), 3*vert_len/4)
 
 #g
 def draw_lc_G(start_x, start_y):
-    draw_horiz_line(start_x, start_y - vert_len/2)
-    goToPos(start_x + horiz_len, start_y - vert_len/4, UP)
-    t1.circle(3*horiz_len/8, 180)
-    draw_vert_line(getCurrX(), getCurrY(), 3*vert_len/4)
+    draw_lc_O(start_x, start_y)
+    draw_vert_line(start_x + horiz_len, start_y - vert_len/2, 3*vert_len/4)
+    t1.setheading(UP)
+    t1.circle(horiz_len/2, -180)
+
+#h
+def draw_lc_H(start_x, start_y):
+    draw_vert_line(start_x, start_y, vert_len)
+    
+    
+
+#o
+def draw_lc_O(start_x, start_y, DEG=360):
+    goToPos(start_x + horiz_len, start_y - 3*vert_len/4, UP)
+    t1.circle(horiz_len/2, DEG)
 
 #s
-def draw_lc_S(start_x, start_y):   
-    goToPos(start_x + horiz_len, start_y - 4*vert_len/7, 120)
+def draw_lc_S(start_x, start_y):
+
+    goToPos(start_x + horiz_len, start_y - 5*vert_len/8, 120)
     t1.circle(horiz_len/2, 120)
     draw_diag_line(getCurrX(), getCurrY(), 5*horiz_len/6, vert_len/4)
     goToPos(getCurrX(), getCurrY(), 60)
@@ -431,6 +443,8 @@ alphabet = {
     "d" : draw_lc_D,
     "e" : draw_lc_E,
     "f" : draw_lc_F,
+    "g" : draw_lc_G,
+    "o" : draw_lc_O,
     "s" : draw_lc_S,
     "z" : draw_lc_Z,
     "1" : draw_one,
@@ -441,7 +455,7 @@ alphabet = {
 
 ############### SPACES AND LINE BREAKS ##################
 next_letter = horiz_len + space
-next_line = vert_len + space
+next_line = vert_len + space*4
 
 
 ############### TEST WRITING ALPHABET ##################
