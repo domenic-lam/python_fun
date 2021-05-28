@@ -416,7 +416,11 @@ def draw_exclam(start_x, start_y):
 
 #question mark
 def draw_ques(start_x, start_y):
-    return 
+    goToPos(start_x + horiz_len, start_y - vert_len/4, UP)
+    t1.circle(horiz_len/2, 180)
+    draw_diag_line(start_x + horiz_len/2, start_y - vert_len/2, horiz_len/2, vert_len/4, "up")
+    draw_vert_line(start_x + horiz_len/2, start_y - vert_len/2, vert_len/4)
+    draw_period(start_x + horiz_len/2 - period_sz, start_y)
 
 #dollar sign
 def draw_dollar(start_x, start_y):
