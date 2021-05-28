@@ -341,6 +341,16 @@ def draw_lc_J(start_x, start_y):
     t1.setheading(UP)
     t1.circle(horiz_len/2, -180)
 
+#k
+def draw_lc_K(start_x, start_y):
+    draw_vert_line(start_x, start_y)
+    draw_diag_line(start_x, start_y - 3*vert_len/4, 2*horiz_len/3, vert_len/4, "up")
+    draw_diag_line(start_x, start_y - 3*vert_len/4, horiz_len, vert_len/4)
+
+#l
+def draw_lc_L(start_x, start_y):
+    draw_vert_line(start_x + horiz_len/2, start_y)
+
 #o
 def draw_lc_O(start_x, start_y, DEG=360):
     goToPos(start_x + horiz_len, start_y - 3*vert_len/4, UP)
@@ -384,7 +394,7 @@ def draw_three(start_x, start_y):
 def draw_space(start_x, start_y):
     return
 
-period_sz = 2
+period_sz = 1.5
 #period
 def draw_period(start_x, start_y):
     goToPos(start_x + period_sz, start_y - vert_len + period_sz/2)
@@ -457,8 +467,10 @@ alphabet = {
     "f" : draw_lc_F,
     "g" : draw_lc_G,
     "h" : draw_lc_H,
-    "i" : draw_lc_I,
+    # "i" : draw_lc_I,
     "j" : draw_lc_J,
+    "k" : draw_lc_K,
+    "l" : draw_lc_L,
     "o" : draw_lc_O,
     "s" : draw_lc_S,
     "z" : draw_lc_Z,
