@@ -281,8 +281,7 @@ def draw_lc_A(start_x, start_y):
 #b
 def draw_lc_B(start_x, start_y):
     draw_vert_line(start_x, start_y, vert_len)
-    # draw_lc_C(start_x, start_y, True)
-    # draw_small_loop(start_x, start_y - 3*vert_len/5, horiz_len, "right")
+    draw_lc_C(start_x, start_y, True)
    
 #c
 def draw_lc_C(start_x, start_y, flip=False):
@@ -298,8 +297,8 @@ def draw_lc_C(start_x, start_y, flip=False):
 
 #d
 def draw_lc_D(start_x, start_y):
-    draw_lc_C(start_x, start_y)
     draw_vert_line(start_x + horiz_len, start_y, vert_len)
+    draw_lc_C(start_x, start_y)
     
 #e
 def draw_lc_E(start_x, start_y):
@@ -325,8 +324,22 @@ def draw_lc_G(start_x, start_y):
 #h
 def draw_lc_H(start_x, start_y):
     draw_vert_line(start_x, start_y, vert_len)
+    goToPos(start_x, start_y - 3*vert_len/4, DOWN)
+    t1.circle(horiz_len/2, -180)
+    # draw_lc_O(start_x, start_y + 3*vert_len/4 - vert_len/4, 180)
+    draw_vert_line(getCurrX(), getCurrY(), vert_len/4)
+  
+#i
+def draw_lc_I(start_x, start_y):
+    draw_period(start_x + horiz_len/2 - period_sz, start_y + vert_len/2 + period_sz*2)
+    draw_vert_line(start_x + horiz_len/2, start_y - vert_len/2, vert_len/2) 
     
-    
+#j
+def draw_lc_J(start_x, start_y):
+    draw_lc_I(start_x + horiz_len/2, start_y)
+    draw_vert_line(start_x + horiz_len, start_y - vert_len/2, 3*vert_len/4)
+    t1.setheading(UP)
+    t1.circle(horiz_len/2, -180)
 
 #o
 def draw_lc_O(start_x, start_y, DEG=360):
@@ -335,7 +348,6 @@ def draw_lc_O(start_x, start_y, DEG=360):
 
 #s
 def draw_lc_S(start_x, start_y):
-
     goToPos(start_x + horiz_len, start_y - 5*vert_len/8, 120)
     t1.circle(horiz_len/2, 120)
     draw_diag_line(getCurrX(), getCurrY(), 5*horiz_len/6, vert_len/4)
@@ -444,6 +456,9 @@ alphabet = {
     "e" : draw_lc_E,
     "f" : draw_lc_F,
     "g" : draw_lc_G,
+    "h" : draw_lc_H,
+    "i" : draw_lc_I,
+    "j" : draw_lc_J,
     "o" : draw_lc_O,
     "s" : draw_lc_S,
     "z" : draw_lc_Z,
@@ -510,14 +525,16 @@ next_line = vert_len + space*4
 # w2 = "HELLO, MY nam3 ic ELY Lamb."
 # w3 = "abcde,."
 
-############### TEST ALPHABET DICT ##################
+
+################# PRINTING ##################
+line_end = 15
 def test_print_alpha():
     line_break = 0
     nxt = 0
     for v in alphabet.values():
         v(top_x + nxt*next_letter, left_y - line_break*next_line)
         nxt += 1
-        if nxt > 15:
+        if nxt > line_end:
             nxt = 0
             line_break += 1
 
@@ -527,7 +544,7 @@ def prnt_input(user_in):
     line_break = 0
     nxt = 0
     for ch in user_in:
-        if nxt > 15:
+        if nxt > line_end:
             if ch != ' ':
                 nxt = 0
                 line_break += 1
