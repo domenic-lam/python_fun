@@ -21,8 +21,10 @@ import turtle
 screen = turtle.Screen()
 screen.setup(startx = 0, starty = 0)
 t1 = turtle.Turtle()
+t1.pensize(2)
 t1.speed(speed=0)
 t1.hideturtle() # hide turtle pointer
+period_sz = 1
 
 # try:
 #     screen.bgcolor(bkgdclr)
@@ -238,21 +240,33 @@ def draw_U(start_x, start_y):
     draw_vert_line(start_x + horiz_len, start_y, 3*vert_len/4)
 
 #V
-def draw_V(start_x, start_y):
-    draw_diag_line(start_x, start_y, horiz_len/2, vert_len)
-    draw_diag_line(getCurrX(), getCurrY(), horiz_len/2, vert_len, "up") #left line
+def draw_V(start_x, start_y, upper=True):
+    if upper:
+        v_len = vert_len
+    else:
+        v_len = vert_len/2
+    draw_diag_line(start_x, start_y, horiz_len/2, v_len)
+    draw_diag_line(start_x + horiz_len/2, start_y - v_len, horiz_len/2, v_len, "up") #left line
     
 #W
-def draw_W(start_x, start_y):
-    draw_diag_line(start_x, start_y, horiz_len/4, vert_len)
-    draw_diag_line(getCurrX(), getCurrY(), horiz_len/4, vert_len, "up") #left line
-    draw_diag_line(getCurrX(), getCurrY(), horiz_len/4, vert_len)
-    draw_diag_line(getCurrX(), getCurrY(), horiz_len/4, vert_len, "up") #left line
+def draw_W(start_x, start_y, upper=True):
+    if upper:
+        v_len = vert_len
+    else:
+        v_len = vert_len/2
+    draw_diag_line(start_x, start_y, horiz_len/4, v_len)
+    draw_diag_line(start_x + horiz_len/4, start_y - v_len, horiz_len/4, v_len, "up") #left line
+    draw_diag_line(start_x + horiz_len/2, start_y, horiz_len/4, v_len)
+    draw_diag_line(start_x + 3*horiz_len/4, start_y - v_len, horiz_len/4, v_len, "up") #left line
     
 #X
-def draw_X(start_x, start_y):
-    draw_diag_line(start_x, start_y, horiz_len, vert_len)
-    draw_diag_line(start_x, start_y - vert_len, horiz_len, vert_len, "up")
+def draw_X(start_x, start_y, upper=True):
+    if upper:
+        v_len = vert_len
+    else:
+        v_len = vert_len/2
+    draw_diag_line(start_x, start_y, horiz_len, v_len)
+    draw_diag_line(start_x, start_y - v_len, horiz_len, v_len, "up")
     
 #Y
 def draw_Y(start_x, start_y):
@@ -276,12 +290,14 @@ def draw_Z(start_x, start_y, upper=True):
 #a
 def draw_lc_A(start_x, start_y):
     draw_vert_line(start_x + horiz_len, start_y - vert_len/2, vert_len/2)
-    draw_lc_C(start_x, start_y)
+    draw_lc_O(start_x, start_y)
+    # draw_lc_C(start_x, start_y)
     
 #b
 def draw_lc_B(start_x, start_y):
     draw_vert_line(start_x, start_y, vert_len)
-    draw_lc_C(start_x, start_y, True)
+    draw_lc_O(start_x, start_y)
+    # draw_lc_C(start_x, start_y, True)
    
 #c
 def draw_lc_C(start_x, start_y, flip=False):
@@ -298,7 +314,8 @@ def draw_lc_C(start_x, start_y, flip=False):
 #d
 def draw_lc_D(start_x, start_y):
     draw_vert_line(start_x + horiz_len, start_y, vert_len)
-    draw_lc_C(start_x, start_y)
+    draw_lc_O(start_x, start_y)
+    # draw_lc_C(start_x, start_y)
     
 #e
 def draw_lc_E(start_x, start_y):
@@ -309,10 +326,10 @@ def draw_lc_E(start_x, start_y):
 #f
 def draw_lc_F(start_x, start_y):
     draw_horiz_line(start_x, start_y - vert_len/2)
-    goToPos(start_x + horiz_len, start_y - vert_len/4, UP)
-    t1.circle(3*horiz_len/8, 180)
+    goToPos(start_x + horiz_len/4, start_y - vert_len/4, DOWN)
+    t1.circle(3*horiz_len/8, -180)
     # draw_lc_O(start_x, start_y + 3*vert_len/4 - vert_len/4, 180)
-    draw_vert_line(getCurrX(), getCurrY(), 3*vert_len/4)
+    draw_vert_line(start_x + horiz_len/4, getCurrY(), 3*vert_len/4)
 
 #g
 def draw_lc_G(start_x, start_y):
@@ -324,14 +341,12 @@ def draw_lc_G(start_x, start_y):
 #h
 def draw_lc_H(start_x, start_y):
     draw_vert_line(start_x, start_y, vert_len)
-    goToPos(start_x, start_y - 3*vert_len/4, DOWN)
-    t1.circle(horiz_len/2, -180)
-    # draw_lc_O(start_x, start_y + 3*vert_len/4 - vert_len/4, 180)
-    draw_vert_line(getCurrX(), getCurrY(), vert_len/4)
+    draw_lc_O(start_x, start_y, 180)
+    draw_vert_line(start_x + horiz_len, getCurrY(), vert_len/4)
   
 #i
 def draw_lc_I(start_x, start_y):
-    draw_period(start_x + horiz_len/2 - period_sz, start_y + vert_len/2 + period_sz*2)
+    draw_period(start_x + horiz_len/2 - period_sz, start_y + vert_len/2 + period_sz*4)
     draw_vert_line(start_x + horiz_len/2, start_y - vert_len/2, vert_len/2) 
     
 #j
@@ -350,12 +365,45 @@ def draw_lc_K(start_x, start_y):
 #l
 def draw_lc_L(start_x, start_y):
     draw_vert_line(start_x + horiz_len/2, start_y)
+    
+#m
+def draw_lc_M(start_x, start_y):
+    draw_vert_line(start_x, start_y - vert_len/2, vert_len/2)
+    goToPos(start_x, start_y - 3*vert_len/5, DOWN)
+    t1.circle(horiz_len/4, -180)
+    draw_vert_line(start_x + horiz_len/2, start_y - 3*vert_len/5, 2*vert_len/5)
+    goToPos(start_x + horiz_len/2, start_y - 3*vert_len/5, DOWN)
+    t1.circle(horiz_len/4, -180)
+    draw_vert_line(start_x + horiz_len, start_y - 3*vert_len/5, 2*vert_len/5)
+
+#n
+def draw_lc_N(start_x, start_y):
+    draw_vert_line(start_x, start_y - vert_len/2, vert_len/2)
+    draw_lc_O(start_x, start_y, 180)
+    draw_vert_line(start_x + horiz_len, getCurrY(), vert_len/4)
 
 #o
 def draw_lc_O(start_x, start_y, DEG=360):
     goToPos(start_x + horiz_len, start_y - 3*vert_len/4, UP)
     t1.circle(horiz_len/2, DEG)
-
+    
+#p
+def draw_lc_P(start_x, start_y):
+    draw_lc_O(start_x, start_y)
+    # draw_lc_C(start_x, start_y, True)
+    draw_vert_line(start_x, start_y - vert_len/2, vert_len)
+    
+#q
+def draw_lc_Q(start_x, start_y):
+    draw_lc_O(start_x, start_y)
+    # draw_lc_C(start_x, start_y)
+    draw_vert_line(start_x + horiz_len, start_y - vert_len/2, vert_len)
+    
+#r
+def draw_lc_R(start_x, start_y):
+    draw_vert_line(start_x, start_y - vert_len/2, vert_len/2)
+    draw_lc_O(start_x, start_y, 180)
+    
 #s
 def draw_lc_S(start_x, start_y):
     goToPos(start_x + horiz_len, start_y - 5*vert_len/8, 120)
@@ -363,7 +411,37 @@ def draw_lc_S(start_x, start_y):
     draw_diag_line(getCurrX(), getCurrY(), 5*horiz_len/6, vert_len/4)
     goToPos(getCurrX(), getCurrY(), 60)
     t1.circle(horiz_len/2, -120)
-
+    
+#t
+def draw_lc_T(start_x, start_y):
+    draw_vert_line(start_x + horiz_len/2, start_y, vert_len)
+    draw_horiz_line(start_x, start_y - vert_len/2)
+  
+#u
+def draw_lc_U(start_x, start_y):  
+    draw_vert_line(start_x, start_y - vert_len/2, vert_len/4)
+    draw_lc_O(start_x, start_y, -180)
+    draw_vert_line(start_x + horiz_len, start_y - vert_len/2, vert_len/2)
+    
+#v
+def draw_lc_V(start_x, start_y):
+    draw_V(start_x, start_y - vert_len/2, False)
+    
+#w
+def draw_lc_W(start_x, start_y):
+    draw_W(start_x, start_y - vert_len/2, False)
+    
+#x
+def draw_lc_X(start_x, start_y):
+    draw_X(start_x, start_y - vert_len/2, False)
+    
+#y
+def draw_lc_Y(start_x, start_y):
+    draw_lc_U(start_x, start_y)
+    draw_vert_line(start_x + horiz_len, start_y - vert_len/2, 3*vert_len/4)
+    t1.setheading(UP)
+    t1.circle(horiz_len/2, -180)
+    
 #z
 def draw_lc_Z(start_x, start_y):
     draw_Z(start_x, start_y, False)
@@ -394,7 +472,6 @@ def draw_three(start_x, start_y):
 def draw_space(start_x, start_y):
     return
 
-period_sz = 1.5
 #period
 def draw_period(start_x, start_y):
     goToPos(start_x + period_sz, start_y - vert_len + period_sz/2)
@@ -406,7 +483,7 @@ def draw_period(start_x, start_y):
 def draw_comma(start_x, start_y):
     draw_period(start_x, start_y)
     t1.setheading(LEFT)
-    t1.circle(period_sz, -180)
+    t1.circle(period_sz*2, -180)
      
     
 #exclamation mark
@@ -425,44 +502,44 @@ def draw_ques(start_x, start_y):
 #dollar sign
 def draw_dollar(start_x, start_y):
     draw_S(start_x, start_y)
-    draw_vert_line(start_x + horiz_len/3, start_y)  
-    draw_vert_line(start_x + 2*horiz_len/3, start_y)  
+    draw_vert_line(start_x + horiz_len/4, start_y)  
+    draw_vert_line(start_x + 3*horiz_len/4, start_y)  
     
     
 ############### ALPHABET DICT ##################
 alphabet = {
-    # " " : draw_space,
-    # "." : draw_period,
-    # "," : draw_comma,
-    # "!" : draw_exclam,
+    " " : draw_space,
+    "." : draw_period,
+    "," : draw_comma,
+    "!" : draw_exclam,
     "?" : draw_ques,
-    # "$" : draw_dollar,
-    # "A" : draw_A,
-    # "B" : draw_B,
-    # "C" : draw_C,
-    # "D" : draw_D,
-    # "E" : draw_E,
-    # "F" : draw_F,
-    # "G" : draw_G,
-    # "H" : draw_H,
-    # "I" : draw_I,
-    # "J" : draw_J,
-    # "K" : draw_K,
-    # "L" : draw_L,
-    # "M" : draw_M,
-    # "N" : draw_N,
-    # "O" : draw_O,
-    # "P" : draw_P,
-    # "Q" : draw_Q,
-    # "R" : draw_R,
-    # "S" : draw_S,
-    # "T" : draw_T,
-    # "U" : draw_U,
-    # "V" : draw_V,
-    # "W" : draw_W,
-    # "X" : draw_X,
-    # "Y" : draw_Y,
-    # "Z" : draw_Z,
+    "$" : draw_dollar,
+    "A" : draw_A,
+    "B" : draw_B,
+    "C" : draw_C,
+    "D" : draw_D,
+    "E" : draw_E,
+    "F" : draw_F,
+    "G" : draw_G,
+    "H" : draw_H,
+    "I" : draw_I,
+    "J" : draw_J,
+    "K" : draw_K,
+    "L" : draw_L,
+    "M" : draw_M,
+    "N" : draw_N,
+    "O" : draw_O,
+    "P" : draw_P,
+    "Q" : draw_Q,
+    "R" : draw_R,
+    "S" : draw_S,
+    "T" : draw_T,
+    "U" : draw_U,
+    "V" : draw_V,
+    "W" : draw_W,
+    "X" : draw_X,
+    "Y" : draw_Y,
+    "Z" : draw_Z,
     "a" : draw_lc_A,
     "b" : draw_lc_B,
     "c" : draw_lc_C,
@@ -471,12 +548,23 @@ alphabet = {
     "f" : draw_lc_F,
     "g" : draw_lc_G,
     "h" : draw_lc_H,
-    # "i" : draw_lc_I,
+    "i" : draw_lc_I,
     "j" : draw_lc_J,
     "k" : draw_lc_K,
     "l" : draw_lc_L,
+    "m" : draw_lc_M,
+    "n" : draw_lc_N,
     "o" : draw_lc_O,
+    "p" : draw_lc_P,
+    "q" : draw_lc_Q,
+    "r" : draw_lc_R,
     "s" : draw_lc_S,
+    "t" : draw_lc_T,
+    "u" : draw_lc_U,
+    "v" : draw_lc_V,
+    "w" : draw_lc_W,
+    "x" : draw_lc_X,
+    "y" : draw_lc_Y,
     "z" : draw_lc_Z,
     "1" : draw_one,
     "2" : draw_two,
