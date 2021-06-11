@@ -18,14 +18,13 @@ import turtle
 #     penclr = input("What color would you like me to write in? (Please choose a different color than the background color) ")
 
 # screen and turtle setup
-screen_width = screen_height = 800
+screen_width = 600
+screen_height = 800
 screen = turtle.Screen()
 screen.setup(width=screen_width, height=screen_height,startx=0, starty=0)
-t1 = turtle.Turtle()
+t1 = turtle.Turtle(visible=False) # hide turtle pointer
 t1.pensize(2)
 t1.speed(speed=0)
-# t1.goto(TURTLE_SIZE/2 - screen.window_width()/2, screen.window_height()/2 - TURTLE_SIZE/2)
-t1.hideturtle() # hide turtle pointer
 period_sz = 1
 
 # try:
@@ -42,11 +41,11 @@ period_sz = 1
 #     t1.pencolor("black")
 #     t1.fillcolor("black")
 
-space = 10 # space between characters
-top_x = -screen_width / 2 + space*2 # starting x
-left_y = screen_height / 2 - space*2 # starting y 
-horiz_len = 30 # character width
-vert_len = 60 # character height
+space = 8 # space between characters
+top_x = -screen_width/2 + space*2 # starting x
+left_y = screen_height/2 - space*2 # starting y 
+horiz_len = screen_width / 30 # character width
+vert_len = horiz_len*2 # character height
 
 # turtle direction headings
 RIGHT = 0
@@ -116,6 +115,19 @@ def draw_small_loop(x, y, h_len=horiz_len, towards="left"):
     else:
         goToPos(x, y, -120)
         t1.circle(h_len/2, -300)
+        
+def draw_tail(x, y, head=True):
+    if head:
+        tail_start = vert_len/2
+        tail_len = 3*vert_len/4
+        DEG = -180
+    else:
+        tail_start = 3*vert_len/4
+        tail_len = vert_len/2
+        DEG = -120
+    draw_vert_line(x + horiz_len, y - tail_start, tail_len)
+    t1.setheading(UP)
+    t1.circle(horiz_len/2, DEG)
 
 
 ############### UPPERCASE LETTERS ##################
@@ -174,7 +186,7 @@ def draw_I(start_x, start_y):
 #J
 def draw_J(start_x, start_y):
     draw_horiz_line(start_x, start_y)
-    draw_vert_line(start_x + horiz_len/2, start_y,7*vert_len/8)
+    draw_vert_line(start_x + horiz_len/2, start_y, 7*vert_len/8)
     t1.setheading(UP)
     t1.circle(horiz_len/4, -180)
 
@@ -278,14 +290,7 @@ def draw_Y(start_x, start_y):
 
 #Z
 def draw_Z(start_x, start_y, upper=True):
-    if upper:
-        v_len = vert_len
-        draw_horiz_line(start_x, start_y)
-    else:
-        v_len = vert_len/2
-        draw_horiz_line(start_x, start_y - v_len)
-    draw_diag_line(start_x, start_y - vert_len, horiz_len, v_len, "up")
-    draw_horiz_line(start_x, start_y - vert_len)
+    draw_seven(start_x, start_y, upper, True)
 
 
 ############### LOWERCASE LETTERS ##################
@@ -336,9 +341,7 @@ def draw_lc_F(start_x, start_y):
 #g
 def draw_lc_G(start_x, start_y):
     draw_lc_O(start_x, start_y)
-    draw_vert_line(start_x + horiz_len, start_y - vert_len/2, 3*vert_len/4)
-    t1.setheading(UP)
-    t1.circle(horiz_len/2, -180)
+    draw_tail(start_x, start_y)
 
 #h
 def draw_lc_H(start_x, start_y):
@@ -354,9 +357,7 @@ def draw_lc_I(start_x, start_y):
 #j
 def draw_lc_J(start_x, start_y):
     draw_lc_I(start_x + horiz_len/2, start_y)
-    draw_vert_line(start_x + horiz_len, start_y - vert_len/2, 3*vert_len/4)
-    t1.setheading(UP)
-    t1.circle(horiz_len/2, -180)
+    draw_tail(start_x, start_y)
 
 #k
 def draw_lc_K(start_x, start_y):
@@ -440,13 +441,11 @@ def draw_lc_X(start_x, start_y):
 #y
 def draw_lc_Y(start_x, start_y):
     draw_lc_U(start_x, start_y)
-    draw_vert_line(start_x + horiz_len, start_y - vert_len/2, 3*vert_len/4)
-    t1.setheading(UP)
-    t1.circle(horiz_len/2, -180)
+    draw_tail(start_x, start_y)
 
 #z
 def draw_lc_Z(start_x, start_y):
-    draw_Z(start_x, start_y, False)
+    draw_Z(start_x, start_y - vert_len/2, False)
 
 
 ################# NUMBERS ##################
@@ -465,9 +464,55 @@ def draw_two(start_x, start_y):
 
 #3
 def draw_three(start_x, start_y):
-    draw_horiz_line(start_x, start_y)
-    draw_diag_line(start_x, start_y - vert_len/2, horiz_len, vert_len/2, "up")
+    draw_seven(start_x, start_y, False)
     draw_loop(start_x, start_y - vert_len/2)
+
+#4
+def draw_four(start_x, start_y):
+    draw_diag_line(start_x, start_y - vert_len/2, horiz_len/4, vert_len/2, "up")
+    draw_horiz_line(start_x, start_y - vert_len/2)
+    draw_vert_line(start_x + 3*horiz_len/4, start_y)
+
+#5
+def draw_five(start_x, start_y):
+    draw_horiz_line(start_x, start_y)
+    draw_vert_line(start_x, start_y, vert_len/2)
+    draw_loop(start_x, start_y - vert_len/2)
+
+#6
+def draw_six(start_x, start_y):
+    goToPos(start_x + horiz_len, start_y - vert_len/4, UP)
+    t1.circle(horiz_len/2, 180)
+    draw_vert_line(start_x, start_y - vert_len/4, vert_len/2)
+    draw_lc_O(start_x, start_y)
+
+#7
+def draw_seven(start_x, start_y, full=True, isZ=False):
+    if full:
+        v_len = vert_len
+    else:
+        v_len = vert_len/2
+    draw_horiz_line(start_x, start_y)
+    draw_diag_line(start_x, start_y - v_len, horiz_len, v_len, "up")
+    if isZ:
+        draw_horiz_line(start_x, start_y - v_len)
+        
+#8
+def draw_eight(start_x, start_y):
+    draw_lc_O(start_x, start_y + vert_len/2)
+    draw_lc_O(start_x, start_y)
+
+#9
+def draw_nine(start_x, start_y):
+    draw_lc_O(start_x, start_y + vert_len/2)
+    draw_tail(start_x, start_y + vert_len/2, False)
+
+#0
+def draw_zero(start_x, start_y):
+    draw_O(start_x, start_y)
+    SLANT = 4
+    draw_diag_line(start_x + horiz_len - SLANT, start_y - SLANT, horiz_len - SLANT*2, vert_len - SLANT*2, towards="left")
+
 
 
 ############### PUNCTUATION ##################
@@ -510,38 +555,22 @@ def draw_dollar(start_x, start_y):
 
 ############### ALPHABET DICT ##################
 alphabet = {
+    "1" : draw_one,
+    "2" : draw_two,
+    "3" : draw_three,
+    "4" : draw_four,
+    "5" : draw_five,
+    "6" : draw_six,
+    "7" : draw_seven,
+    "8" : draw_eight,
+    "9" : draw_nine,
+    "0" : draw_zero,
     " " : draw_space,
     "." : draw_period,
     "," : draw_comma,
     "!" : draw_exclam,
     "?" : draw_ques,
     "$" : draw_dollar,
-    "A" : draw_A,
-    "B" : draw_B,
-    "C" : draw_C,
-    "D" : draw_D,
-    "E" : draw_E,
-    "F" : draw_F,
-    "G" : draw_G,
-    "H" : draw_H,
-    "I" : draw_I,
-    "J" : draw_J,
-    "K" : draw_K,
-    "L" : draw_L,
-    "M" : draw_M,
-    "N" : draw_N,
-    "O" : draw_O,
-    "P" : draw_P,
-    "Q" : draw_Q,
-    "R" : draw_R,
-    "S" : draw_S,
-    "T" : draw_T,
-    "U" : draw_U,
-    "V" : draw_V,
-    "W" : draw_W,
-    "X" : draw_X,
-    "Y" : draw_Y,
-    "Z" : draw_Z,
     "a" : draw_lc_A,
     "b" : draw_lc_B,
     "c" : draw_lc_C,
@@ -568,15 +597,38 @@ alphabet = {
     "x" : draw_lc_X,
     "y" : draw_lc_Y,
     "z" : draw_lc_Z,
-    "1" : draw_one,
-    "2" : draw_two,
-    "3" : draw_three,
+    "A" : draw_A,
+    "B" : draw_B,
+    "C" : draw_C,
+    "D" : draw_D,
+    "E" : draw_E,
+    "F" : draw_F,
+    "G" : draw_G,
+    "H" : draw_H,
+    "I" : draw_I,
+    "J" : draw_J,
+    "K" : draw_K,
+    "L" : draw_L,
+    "M" : draw_M,
+    "N" : draw_N,
+    "O" : draw_O,
+    "P" : draw_P,
+    "Q" : draw_Q,
+    "R" : draw_R,
+    "S" : draw_S,
+    "T" : draw_T,
+    "U" : draw_U,
+    "V" : draw_V,
+    "W" : draw_W,
+    "X" : draw_X,
+    "Y" : draw_Y,
+    "Z" : draw_Z,
 }
 
 
 ############### SPACES AND LINE BREAKS ##################
 next_letter = horiz_len + space
-next_line = vert_len + space*4
+next_line = vert_len + space*(vert_len/10)
 
 
 ############### TEST WRITING ALPHABET ##################
@@ -633,7 +685,7 @@ next_line = vert_len + space*4
 
 
 ################# PRINTING ##################
-line_end = screen_width / horiz_len - 8
+line_end = (screen_width / next_letter) - 2
 def test_print_alpha():
     line_break = 0
     nxt = 0
